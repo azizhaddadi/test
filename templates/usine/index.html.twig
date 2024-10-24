@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des usines{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Liste des usines</h1>
+
+        <div class="mb-3">
+            <a href="{{ path('usine_new') }}" class="btn btn-success">Ajouter Usine</a>
+        </div>
+
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Code Postal</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usine in usines %}
+                    <tr>
+                        <td>{{ usine.id }}</td>
+                        <td>{{ usine.nom }}</td>
+                        <td>{{ usine.codepostal }}</td>
+                        <td>
+                            <form method="post" action="{{ path('usine_delete', {'id': usine.id}) }}" onsubmit="return confirm('Are you sure you want to delete this usine?');" style="display: inline;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ usine.id) }}">
+                                <button class="btn btn-danger btn-sm">Supprimer</button>
+                            </form>
+                            
+                            <form method="get" action="{{ path('usine_edit', {'id': usine.id}) }}" style="display: inline;">
+                                <button class="btn btn-primary btn-sm">Modifier</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

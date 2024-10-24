@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usine{% endblock %}
+
+{% block body %}
+    <h1>Usine Details</h1>
+
+    <p><strong>ID:</strong> {{ usine.id }}</p>
+    <p><strong>Nom:</strong> {{ usine.nom }}</p>
+    <p><strong>Code Postal:</strong> {{ usine.codepostal }}</p>
+
+    <a href="{{ path('usine_edit', {'id': usine.id}) }}" class="btn btn-primary">Edit</a>
+    <form method="post" action="{{ path('usine_delete', {'id': usine.id}) }}" onsubmit="return confirm('Are you sure you want to delete this usine?');">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ usine.id) }}">
+        <button class="btn btn-danger">Delete</button>
+    </form>
+    <a href="{{ path('usine_index') }}" class="btn btn-secondary">Back to list</a>
+{% endblock %}
